@@ -1,75 +1,24 @@
-import React, { useState, useCallback, ChangeEvent, FormEvent } from 'react';
-import { fetchIssues, GitHubIssue } from '../services/githubService';
-import './issuesviewer.css'; // Match your actual filename
+import React, { ChangeEvent } from 'react';
+import { useIssuesViewer } from './useIssuesViewer';
+import './issuesviewer.css';
 
-// Component renamed to force clean remount and avoid HMR issues
-function GitHubIssuesViewer(): React.ReactElement {
-  const [repoInput, setRepoInput] = useState<string>('');
-  const [patInput, setPatInput] = useState<string>('');
-  const [owner, setOwner] = useState<string>('');
-  const [repo, setRepo] = useState<string>('');
-  const [issues, setIssues] = useState<GitHubIssue[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
-  const [showResults, setShowResults] = useState<boolean>(false);
-
-  const loadIssues = useCallback(
-    async (
-      targetOwner: string,
-      targetRepo: string,
-      targetPat: string,
-      pageUrl: string | null = null,
-      append: boolean = false,
-    ) => {
-      setError(null);
-      setLoading(true);
-      try {
-        const response = await fetchIssues(
-          targetOwner,
-          targetRepo,
-          targetPat,
-          pageUrl,
-        );
-        if (append) {
-          setIssues((prevIssues) => [...prevIssues, ...response.issues]);
-        } else {
-          setIssues(response.issues);
-        }
-        setNextPageUrl(response.nextPageUrl);
-        setShowResults(true);
-      } catch (err: any) {
-        setError(err.message || 'An unknown error occurred.');
-        setIssues([]);
-        setNextPageUrl(null);
-        setShowResults(false);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [],
-  );
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const parts = repoInput.split('/');
-    if (parts.length === 2 && parts[0] && parts[1]) {
-      setOwner(parts[0]);
-      setRepo(parts[1]);
-      loadIssues(parts[0], parts[1], patInput, null, false);
-    } else {
-      setError('Please enter a valid repository in the format "owner/repo"');
-      setIssues([]);
-      setNextPageUrl(null);
-      setShowResults(false);
-    }
-  };
-
-  const handleLoadMore = () => {
-    if (nextPageUrl && !loading) {
-      loadIssues(owner, repo, patInput, nextPageUrl, true);
-    }
-  };
+function IssuesViewer(): React.ReactElement {
+  const {
+    repoInput,
+    patInput,
+    owner,
+    repo,
+    issues,
+    loading,
+    error,
+    nextPageUrl,
+    showResults,
+    setRepoInput,
+    setPatInput,
+    handleSubmit,
+    handleLoadMore,
+    handleBackClick,
+  } = useIssuesViewer();
 
   const handleRepoInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRepoInput(e.target.value);
@@ -77,13 +26,6 @@ function GitHubIssuesViewer(): React.ReactElement {
 
   const handlePatInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPatInput(e.target.value);
-  };
-
-  const handleBackClick = () => {
-    setShowResults(false);
-    setIssues([]);
-    setError(null);
-    setNextPageUrl(null);
   };
 
   return (
@@ -127,7 +69,7 @@ function GitHubIssuesViewer(): React.ReactElement {
           {error && <p className="error-message">Error: {error}</p>}
         </div>
       ) : (
-        // Results View - Now with scrolling container
+        // Results View
         <div className="results-container">
           {/* Fixed Header */}
           <div className="results-header">
@@ -227,4 +169,4 @@ function GitHubIssuesViewer(): React.ReactElement {
   );
 }
 
-export default GitHubIssuesViewer;
+export default IssuesViewer;
