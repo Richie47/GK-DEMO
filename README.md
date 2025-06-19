@@ -11,6 +11,7 @@ This was built off Electron React Boilerplate - https://github.com/electron-reac
 1. Clone the application
    `git clone https://github.com/richie47/GK-DEMO.git`
 
+  Change directory
    `cd GK-DEMO`
 
 2. Install dependencies
@@ -33,7 +34,7 @@ This was built off Electron React Boilerplate - https://github.com/electron-reac
 Generate a Personal Access Token from GitHub:
 
 Go to GitHub Settings → Developer settings → Personal access tokens
-Generate a new (clasic) token with repo scope
+Generate a new (classic) token with repo scope
 
 Enter the token in the "Personal Access Token" field
 Enter your private repository and load issues
