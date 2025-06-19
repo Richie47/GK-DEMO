@@ -1,6 +1,5 @@
-import React from 'react';
-import IssuesViewer from './IssuesViewer/IssuesViewer'; // Import your component
-import './App.css'; // You can keep or remove this as needed
+import IssuesViewer from './IssuesViewer/IssuesViewer';
+import './App.css';
 
 function App() {
   return (

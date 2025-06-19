@@ -1,7 +1,4 @@
-/*
- * @NOTE: Prepend a `~` to css file paths that are in your node_modules
- *        See https://github.com/webpack-contrib/sass-loader#imports
- */
+/* I liked this from the default boilerplate, so I kept it. */
 body {
   position: relative;
   color: white;
