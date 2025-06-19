@@ -2,8 +2,11 @@
 
 - Node.js (version 16 or higher) - was built on 21.6.0
 - npm package manager (yarn or yum may work, did not test)
+- Not tested on Linux/Mac, will work on Windows machines.
 
-# Getting started
+## Getting started
+
+This was built off Electron React Boilerplate - https://github.com/electron-react-boilerplate/electron-react-boilerplate
 
 1. Clone the application
    `git clone richie47/GK-DEMO.git`
