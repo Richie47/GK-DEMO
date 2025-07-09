@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { useIssuesViewer } from './useIssuesViewer';
-import './issuesviewer.css';
+import './IssuesViewer.css';
 
 function IssuesViewer(): React.ReactElement {
   const {
